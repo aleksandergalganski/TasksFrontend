@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { register } from '../../actions/authActions';
+// Material UI
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,7 +14,6 @@ import { InputAdornment, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   login: {
-    margin: '80px 0',
     display: 'flex',
     justifyContent: 'center'
   },
@@ -26,12 +29,39 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Register = () => {
+const Register = props => {
   const classes = useStyles();
+
+  const { auth, history, register } = props;
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      history.push('/tasks');
+    }
+
+    if (auth.error) {
+    }
+  }, [auth.isAuthenticated, auth.error]);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (email === '' || password === '' || password2 === '') {
+      // error message
+    } else if (password !== password2) {
+      // error message
+    } else {
+      register(email, password);
+    }
+  };
 
   return (
     <section className={classes.login}>
-      <form className={classes.loginForm}>
+      <form className={classes.loginForm} onSubmit={onSubmit}>
         <Typography variant='h5' align='center'>
           Register
         </Typography>
@@ -40,6 +70,8 @@ const Register = () => {
           <Input
             name='email'
             type='email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             startAdornment={
               <InputAdornment position='start'>
                 <EmailIcon />
@@ -52,6 +84,8 @@ const Register = () => {
           <Input
             name='password'
             type='password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             startAdornment={
               <InputAdornment position='start'>
                 <LockOpenIcon />
@@ -64,6 +98,8 @@ const Register = () => {
           <Input
             name='password2'
             type='password'
+            value={password2}
+            onChange={e => setPassword2(e.target.value)}
             startAdornment={
               <InputAdornment position='start'>
                 <LockOpenIcon />
@@ -79,4 +115,13 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  auth: PropTypes.object.isRequired,
+  register: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { register })(Register);

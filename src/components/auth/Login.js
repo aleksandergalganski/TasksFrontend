@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login } from '../../actions/authActions';
+// Material UI
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,7 +14,6 @@ import { InputAdornment, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   login: {
-    margin: '80px 0',
     display: 'flex',
     justifyContent: 'center'
   },
@@ -26,12 +29,38 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = () => {
+const Login = props => {
   const classes = useStyles();
+
+  const { auth, history, login } = props;
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      history.push('/tasks');
+    }
+
+    if (auth.error) {
+      setAlert(auth.error);
+    }
+  }, [auth.isAuthenticated, auth.error]);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [alert, setAlert] = useState(null);
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (email === '' || password === '') {
+      // error message
+    } else {
+      login(email, password);
+    }
+  };
 
   return (
     <section className={classes.login}>
-      <form className={classes.loginForm}>
+      <form className={classes.loginForm} onSubmit={onSubmit}>
         <Typography variant='h5' align='center'>
           Login
         </Typography>
@@ -40,6 +69,8 @@ const Login = () => {
           <Input
             name='email'
             type='email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             startAdornment={
               <InputAdornment position='start'>
                 <EmailIcon />
@@ -52,6 +83,8 @@ const Login = () => {
           <Input
             name='password'
             type='password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             startAdornment={
               <InputAdornment position='start'>
                 <LockOpenIcon />
@@ -67,4 +100,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  auth: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { login })(Login);
