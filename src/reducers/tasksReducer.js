@@ -1,52 +1,103 @@
 import {
-  GET_TASKS,
-  ADD_TASK,
-  UPDATE_TASK,
-  DELETE_TASK,
+  GET_TODO_TASKS,
+  GET_RUNNING_TASKS,
+  GET_FINISHED_TASKS,
+  SET_TASK_AS_RUNNING,
+  SET_TASK_AS_FINISHED,
+  ADD_RUNNING_TASK,
+  ADD_TODO_TASK,
+  DELETE_TODO_TASK,
+  DELETE_RUNNING_TASK,
+  DELETE_FINISHED_TASK,
+  CLEAR_TASKS,
   SET_LOADING
 } from '../actions/types';
 
 const initialState = {
+  todoTasks: null,
+  runningTasks: null,
+  finishedTasks: null,
   tasks: null,
-  current: null,
   loading: false,
   error: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_TASKS:
+    case GET_TODO_TASKS:
       return {
         ...state,
-        tasks: action.payload,
+        todoTasks: action.payload,
         loading: false
       };
-    case ADD_TASK:
+    case GET_RUNNING_TASKS:
       return {
         ...state,
-        tasks: [...state.tasks, action.payload],
+        runningTasks: action.payload,
         loading: false
       };
-    case UPDATE_TASK:
+    case GET_FINISHED_TASKS:
       return {
         ...state,
-        tasks: state.tasks.map(task =>
-          task.id === action.payload.id ? action.payload : task
-        ),
+        finishedTasks: action.payload,
         loading: false
       };
-    case DELETE_TASK:
+    case SET_TASK_AS_RUNNING:
       return {
         ...state,
-        tasks: state.tasks.filter(task => task.id !== action.payload),
+        todoTasks: state.todoTasks.filter(task => task.id !== action.payload.id),
+        runningTasks: [...state.runningTasks, action.payload],
         loading: false
+      };
+    case SET_TASK_AS_FINISHED:
+      return {
+        ...state,
+        runningTasks: state.runningTasks.filter(task => task.id !== action.payload.id),
+        finishedTasks: [...state.finishedTasks, action.payload],
+        loading: false
+      };
+    case ADD_RUNNING_TASK:
+      return {
+        ...state,
+        runningTasks: [...state.runningTasks, action.payload],
+        loading: false
+      };
+    case ADD_TODO_TASK:
+      return {
+        ...state,
+        todoTasks: [...state.todoTasks, action.payload],
+        loading: false
+      };
+    case DELETE_RUNNING_TASK:
+      return {
+        ...state,
+        runningTasks: state.runningTasks.filter(task => task.id !== action.payload),
+        loading: false
+      };
+    case DELETE_TODO_TASK:
+      return {
+        ...state,
+        todoTasks: state.todoTasks.filter(task => task.id !== action.payload),
+        loading: false
+      };
+    case DELETE_FINISHED_TASK:
+      return {
+        ...state,
+        finishedTasks: state.finishedTasks.filter(task => task.id !== action.payload),
+        loading: false
+      };
+    case CLEAR_TASKS:
+      return {
+        ...state,
+        finishedTasks: null,
+        todoTasks: null,
+        runningTasks: null
       };
     case SET_LOADING:
       return {
         ...state,
         loading: true
       };
-
     default:
       return state;
   }
