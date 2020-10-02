@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,11 +16,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddTaskDialog = ({ onClose, open, task }) => {
+const AddTaskDialog = ({ onClose, open }) => {
   const classes = useStyles();
 
+  const [name, setName] = useState('');
+
   const onAdd = () => {
-    onClose({ name: 'name', id: 3 });
+    onClose(name);
   };
 
   const onCancel = () => {
@@ -32,7 +34,13 @@ const AddTaskDialog = ({ onClose, open, task }) => {
       <DialogTitle id='simple-dialog-title'>Add Task</DialogTitle>
       <DialogContent>
         <FormControl className={classes.formControl}>
-          <TextField id='task' label='Task' variant='outlined' />
+          <TextField
+            id='task'
+            label='Task'
+            variant='outlined'
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
         </FormControl>
       </DialogContent>
       <DialogActions>
@@ -46,8 +54,7 @@ const AddTaskDialog = ({ onClose, open, task }) => {
 
 AddTaskDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  task: PropTypes.object
+  open: PropTypes.bool.isRequired
 };
 
 export default AddTaskDialog;
