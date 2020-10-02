@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import AddTaskDialog from './AddTaskDialog';
+import { getTasks, addTask } from '../../actions/tasksActions';
+import TaskItem from './TaskItem';
+// Material UI
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import TaskItem from './TaskItem';
-
 import ListItem from '@material-ui/core/ListItem';
-import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import AddTaskDialog from './AddTaskDialog';
 
-const RunningTasks = () => {
+const RunningTasks = ({ getTasks, addTask, tasks: { runningTasks } }) => {
+  useEffect(() => {
+    getTasks('running');
+    // eslint-disable-next-line
+  }, []);
+
   const [open, setOpen] = useState(false);
-  const [task, setTask] = useState(null);
 
   const handleOpen = () => {
     setOpen(true);
@@ -22,34 +29,50 @@ const RunningTasks = () => {
 
   const handleClose = value => {
     setOpen(false);
-    console.log(value);
+    if (value) {
+      addTask('running', value);
+    }
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Card>
         <CardContent>
           <Typography variant='h6' align='center'>
             Running
           </Typography>
           <List>
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
+            {runningTasks.length !== 0 ? (
+              runningTasks.map(task => <TaskItem key={task.id} task={task} />)
+            ) : (
+              <ListItem>
+                <ListItemText primary='Add Tasks' />
+              </ListItem>
+            )}
             <ListItem>
               <ListItemIcon>
-                <IconButton color='primary' aria-label='delete' onClick={handleOpen}>
-                  <AddIcon fontSize='large' />
-                </IconButton>
+                <Fab color='primary' size='small' onClick={handleOpen}>
+                  <AddIcon />
+                </Fab>
               </ListItemIcon>
               <ListItemText primary='Add Running Task' />
             </ListItem>
           </List>
         </CardContent>
       </Card>
-      <AddTaskDialog task={task} open={open} onClose={handleClose} />
-    </React.Fragment>
+      <AddTaskDialog open={open} onClose={handleClose} />
+    </Fragment>
   );
 };
 
-export default RunningTasks;
+const mapStateToProps = state => ({
+  tasks: state.tasks
+});
+
+RunningTasks.propTypes = {
+  tasks: PropTypes.object.isRequired,
+  getTasks: PropTypes.func.isRequired,
+  addTask: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, { getTasks, addTask })(RunningTasks);

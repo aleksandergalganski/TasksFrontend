@@ -1,26 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Tasks from './components/tasks/Tasks';
+import ProtectedRoute from './components/routing/ProtectedRoute';
 import './App.css';
 import store from './store';
+import { getUser } from './actions/authActions';
 
 const App = () => {
+  useEffect(() => {
+    store.dispatch(getUser());
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>
         <React.Fragment>
           <Navbar />
-          <Switch>
-            <div className='container'>
+          <div className='container'>
+            <Switch>
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
-              <Route exact path='/tasks' component={Tasks} />
-            </div>
-          </Switch>
+              <ProtectedRoute exact path='/tasks' component={Tasks} />
+            </Switch>
+          </div>
         </React.Fragment>
       </Router>
     </Provider>

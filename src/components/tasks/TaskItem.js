@@ -1,4 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { changeTaskType, deleteTask } from '../../actions/tasksActions';
+import Moment from 'react-moment';
+// Material UI
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,16 +12,29 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
-const TaskItem = () => {
+const TaskItem = ({ task, deleteTask, changeTaskType }) => {
+  const onChangeType = () => {
+    changeTaskType(task.id, task.type);
+  };
+
+  const onDeleteTask = () => {
+    deleteTask(task.id, task.type);
+  };
+
   return (
     <React.Fragment>
       <ListItem>
-        <ListItemIcon>
-          <Checkbox edge='start' disableRipple color='primary' />
-        </ListItemIcon>
-        <ListItemText primary='Single-line item' secondary={'Secondary text'} />
+        {task.type !== 'finished' && (
+          <ListItemIcon>
+            <Checkbox edge='start' disableRipple color='primary' onClick={onChangeType} />
+          </ListItemIcon>
+        )}
+        <ListItemText
+          primary={task.name}
+          secondary={<Moment format='YYYY/MM/DD'>{task.createdAt}</Moment>}
+        />
         <ListItemSecondaryAction>
-          <IconButton edge='end' aria-label='delete'>
+          <IconButton edge='end' aria-label='delete' onClick={onDeleteTask}>
             <DeleteIcon />
           </IconButton>
         </ListItemSecondaryAction>
@@ -25,4 +43,8 @@ const TaskItem = () => {
   );
 };
 
-export default TaskItem;
+TaskItem.propTypes = {
+  task: PropTypes.object.isRequired
+};
+
+export default connect(null, { deleteTask, changeTaskType })(TaskItem);
