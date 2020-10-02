@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { register } from '../../actions/authActions';
+import { register, setError } from '../../actions/authActions';
+import Alert from '../layout/Alert';
+import Spinner from '../layout/Spinner';
 // Material UI
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -32,16 +34,14 @@ const useStyles = makeStyles(theme => ({
 const Register = props => {
   const classes = useStyles();
 
-  const { auth, history, register } = props;
+  const { auth, history, register, setError } = props;
 
   useEffect(() => {
     if (auth.isAuthenticated) {
       history.push('/tasks');
     }
-
-    if (auth.error) {
-    }
-  }, [auth.isAuthenticated, auth.error]);
+    // eslint-disable-next-line
+  }, [auth.isAuthenticated]);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,77 +51,87 @@ const Register = props => {
     e.preventDefault();
 
     if (email === '' || password === '' || password2 === '') {
-      // error message
+      setError('Fill in all inputs');
     } else if (password !== password2) {
-      // error message
+      setError('Passwords are not the same');
     } else {
       register(email, password);
     }
   };
 
   return (
-    <section className={classes.login}>
-      <form className={classes.loginForm} onSubmit={onSubmit}>
-        <Typography variant='h5' align='center'>
-          Register
-        </Typography>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor='email'>Email</InputLabel>
-          <Input
-            name='email'
-            type='email'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            startAdornment={
-              <InputAdornment position='start'>
-                <EmailIcon />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor='password'>Password</InputLabel>
-          <Input
-            name='password'
-            type='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            startAdornment={
-              <InputAdornment position='start'>
-                <LockOpenIcon />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor='password2'>Confirm Password</InputLabel>
-          <Input
-            name='password2'
-            type='password'
-            value={password2}
-            onChange={e => setPassword2(e.target.value)}
-            startAdornment={
-              <InputAdornment position='start'>
-                <LockOpenIcon />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <Button variant='contained' color='primary' style={{ width: '100%' }}>
-          Submit
-        </Button>
-      </form>
-    </section>
+    <Fragment>
+      {auth.loading && <Spinner />}
+      <section className={classes.login}>
+        <form className={classes.loginForm} onSubmit={onSubmit}>
+          {auth.error && <Alert severity='error'>{auth.error}</Alert>}
+          <Typography variant='h5' align='center'>
+            Register
+          </Typography>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor='email'>Email</InputLabel>
+            <Input
+              name='email'
+              type='email'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              startAdornment={
+                <InputAdornment position='start'>
+                  <EmailIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor='password'>Password</InputLabel>
+            <Input
+              name='password'
+              type='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              startAdornment={
+                <InputAdornment position='start'>
+                  <LockOpenIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor='password2'>Confirm Password</InputLabel>
+            <Input
+              name='password2'
+              type='password'
+              value={password2}
+              onChange={e => setPassword2(e.target.value)}
+              startAdornment={
+                <InputAdornment position='start'>
+                  <LockOpenIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <Button
+            variant='contained'
+            color='primary'
+            type='submit'
+            style={{ width: '100%' }}
+          >
+            Submit
+          </Button>
+        </form>
+      </section>
+    </Fragment>
   );
 };
 
 Register.propTypes = {
   auth: PropTypes.object.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { register, setError })(Register);

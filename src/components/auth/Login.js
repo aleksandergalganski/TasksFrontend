@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../../actions/authActions';
+import { login, setError } from '../../actions/authActions';
+import Alert from '../layout/Alert';
+import Spinner from '../layout/Spinner';
 // Material UI
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -32,71 +34,76 @@ const useStyles = makeStyles(theme => ({
 const Login = props => {
   const classes = useStyles();
 
-  const { auth, history, login } = props;
+  const { auth, history, login, setError } = props;
 
   useEffect(() => {
     if (auth.isAuthenticated) {
       history.push('/tasks');
     }
-
-    if (auth.error) {
-      setAlert(auth.error);
-    }
-  }, [auth.isAuthenticated, auth.error]);
+    // eslint-disable-next-line
+  }, [auth.isAuthenticated]);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [alert, setAlert] = useState(null);
 
   const onSubmit = e => {
     e.preventDefault();
 
     if (email === '' || password === '') {
-      // error message
+      setError('Email and password are empty');
     } else {
       login(email, password);
     }
   };
 
   return (
-    <section className={classes.login}>
-      <form className={classes.loginForm} onSubmit={onSubmit}>
-        <Typography variant='h5' align='center'>
-          Login
-        </Typography>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor='email'>Email</InputLabel>
-          <Input
-            name='email'
-            type='email'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            startAdornment={
-              <InputAdornment position='start'>
-                <EmailIcon />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor='password'>Password</InputLabel>
-          <Input
-            name='password'
-            type='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            startAdornment={
-              <InputAdornment position='start'>
-                <LockOpenIcon />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <Button variant='contained' color='primary' style={{ width: '100%' }}>
-          Submit
-        </Button>
-      </form>
-    </section>
+    <Fragment>
+      {auth.loading && <Spinner />}
+      <section className={classes.login}>
+        <form className={classes.loginForm} onSubmit={onSubmit}>
+          {auth.error && <Alert severity='error'>{auth.error}</Alert>}
+          <Typography variant='h5' align='center'>
+            Login
+          </Typography>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor='email'>Email</InputLabel>
+            <Input
+              name='email'
+              type='email'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              startAdornment={
+                <InputAdornment position='start'>
+                  <EmailIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor='password'>Password</InputLabel>
+            <Input
+              name='password'
+              type='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              startAdornment={
+                <InputAdornment position='start'>
+                  <LockOpenIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <Button
+            variant='contained'
+            type='submit'
+            color='primary'
+            style={{ width: '100%' }}
+          >
+            Submit
+          </Button>
+        </form>
+      </section>
+    </Fragment>
   );
 };
 
@@ -109,4 +116,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, setError })(Login);
