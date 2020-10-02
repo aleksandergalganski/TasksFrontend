@@ -1,49 +1,71 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT, REGISTER, AUTH_ERROR, SET_LOADING, GET_USER } from './types';
+import {
+  LOGIN,
+  LOGOUT,
+  REGISTER,
+  SET_AUTH_ERROR,
+  SET_LOADING,
+  GET_USER,
+  CLEAR_AUTH_ERROR
+} from './types';
 
 export const login = (email, password) => async dispatch => {
   try {
+    dispatch({ type: SET_LOADING });
     const loginData = { email, password };
-    setLoading();
-    const res = axios.post('http://localhost:5000/api/v1/auth/login', loginData, {
+    const res = await axios.post('http://localhost:5000/api/v1/auth/login', loginData, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
 
-    dispatch({ type: LOGIN, payload: res.token });
+    dispatch({ type: LOGIN, payload: res.data.token });
   } catch (err) {
-    dispatch({ type: AUTH_ERROR, payload: err.response.statusText });
+    errorHandler(dispatch, err.response.data.message);
   }
 };
 
 export const register = (email, password) => async dispatch => {
   try {
+    dispatch({ type: SET_LOADING });
     const registerData = { email, password };
-    setLoading();
-    const res = axios.post('http://localhost:5000/api/v1/auth/register', registerData, {
+    const res = await axios.post(
+      'http://localhost:5000/api/v1/auth/register',
+      registerData,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    dispatch({ type: REGISTER, payload: res.data.token });
+  } catch (err) {
+    errorHandler(dispatch, err.response.data.message);
+  }
+};
+
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
+};
+
+export const getUser = () => async (dispatch, state) => {
+  try {
+    const res = await axios.get('http://localhost:5000/api/v1/auth/whoami', {
       headers: {
-        'Content-Type': 'application/json'
+        'x-auth-token': state().auth.token
       }
     });
 
-    dispatch({ type: REGISTER, payload: res.token });
-  } catch (err) {
-    dispatch({ type: AUTH_ERROR, payload: err.response.statusText });
-  }
+    dispatch({ type: GET_USER, payload: res.data.data });
+  } catch (err) {}
 };
 
-export const logout = () => dispatch => dispatch({ type: LOGOUT });
-
-export const getUser = () => async dispatch => {
-  try {
-    setLoading();
-    const res = axios.post('http://localhost:5000/api/v1/auth/whoami');
-
-    dispatch({ type: GET_USER, payload: res.data });
-  } catch (err) {
-    dispatch({ type: AUTH_ERROR, payload: err.response.statusText });
-  }
+export const setError = message => async dispatch => {
+  errorHandler(dispatch, message);
 };
 
-const setLoading = () => dispatch => dispatch({ type: SET_LOADING });
+const errorHandler = (dispatch, message) => {
+  dispatch({ type: SET_AUTH_ERROR, payload: message });
+  setTimeout(() => dispatch({ type: CLEAR_AUTH_ERROR }), 2000);
+};
