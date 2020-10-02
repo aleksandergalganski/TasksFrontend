@@ -39,18 +39,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         token: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        loading: false
       };
     case GET_USER:
       return {
         ...state,
         user: action.payload,
+        isAuthenticated: true,
         loading: false
       };
     case SET_AUTH_ERROR:
       return {
         ...state,
         error: action.payload,
+        isAuthenticated: false,
         loading: false
       };
     case CLEAR_AUTH_ERROR:
