@@ -39,7 +39,7 @@ const Register = props => {
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      history.push('/tasks');
+      history.push('/');
     }
     // eslint-disable-next-line
   }, [auth.isAuthenticated]);
