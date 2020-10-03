@@ -9,6 +9,7 @@ import ProtectedRoute from './components/routing/ProtectedRoute';
 import './App.css';
 import store from './store';
 import { getUser } from './actions/authActions';
+import Footer from './components/layout/Footer';
 
 const App = () => {
   useEffect(() => {
@@ -19,7 +20,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <React.Fragment>
+        <main>
           <Navbar />
           <div className='container'>
             <Switch>
@@ -28,7 +29,8 @@ const App = () => {
               <ProtectedRoute exact path='/tasks' component={Tasks} />
             </Switch>
           </div>
-        </React.Fragment>
+        </main>
+        <Footer />
       </Router>
     </Provider>
   );
