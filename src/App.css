@@ -74,6 +74,13 @@ main {
   color: #fff;
 }
 
+.auth-hint {
+  color: #3f51b5;
+  text-align: right;
+  margin-top: 10px;
+  font-family: Roboto;
+}
+
 @media (max-width: 500px) {
   .container {
     max-width: 100%;

@@ -24,9 +24,9 @@ const App = () => {
           <Navbar />
           <div className='container'>
             <Switch>
+              <ProtectedRoute exact path='/' component={Tasks} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
-              <ProtectedRoute exact path='/tasks' component={Tasks} />
             </Switch>
           </div>
         </main>

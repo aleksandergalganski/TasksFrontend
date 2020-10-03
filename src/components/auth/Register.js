@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register, setError } from '../../actions/authActions';
 import Alert from '../layout/Alert';
@@ -118,6 +119,9 @@ const Register = props => {
           >
             Submit
           </Button>
+          <Link to='/login' className='auth-hint'>
+            Already have an acccount? Login
+          </Link>
         </form>
       </section>
     </Fragment>

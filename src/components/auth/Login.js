@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login, setError } from '../../actions/authActions';
+import { Link } from 'react-router-dom';
 import Alert from '../layout/Alert';
 import Spinner from '../layout/Spinner';
 // Material UI
@@ -101,6 +102,9 @@ const Login = props => {
           >
             Submit
           </Button>
+          <Link to='/register' className='auth-hint'>
+            Dont have an acccount? Register
+          </Link>
         </form>
       </section>
     </Fragment>
