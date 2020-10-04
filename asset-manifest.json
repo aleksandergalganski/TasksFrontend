@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "https://aleksandergalganski.github.io/TasksFrontend/static/css/main.588295d7.chunk.css",
-    "main.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.64b2560a.chunk.js",
-    "main.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.64b2560a.chunk.js.map",
+    "main.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.788530f4.chunk.js",
+    "main.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.788530f4.chunk.js.map",
     "runtime-main.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/runtime-main.c37f6642.js",
     "runtime-main.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/runtime-main.c37f6642.js.map",
     "static/js/2.ccad0d31.chunk.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.ccad0d31.chunk.js",
     "static/js/2.ccad0d31.chunk.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.ccad0d31.chunk.js.map",
     "index.html": "https://aleksandergalganski.github.io/TasksFrontend/index.html",
-    "precache-manifest.9704e1c865ccf56cef124b2ad1bb0118.js": "https://aleksandergalganski.github.io/TasksFrontend/precache-manifest.9704e1c865ccf56cef124b2ad1bb0118.js",
+    "precache-manifest.71a64667fd768a396c58eb665250f824.js": "https://aleksandergalganski.github.io/TasksFrontend/precache-manifest.71a64667fd768a396c58eb665250f824.js",
     "service-worker.js": "https://aleksandergalganski.github.io/TasksFrontend/service-worker.js",
     "static/css/main.588295d7.chunk.css.map": "https://aleksandergalganski.github.io/TasksFrontend/static/css/main.588295d7.chunk.css.map",
     "static/js/2.ccad0d31.chunk.js.LICENSE.txt": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.ccad0d31.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.c37f6642.js",
     "static/js/2.ccad0d31.chunk.js",
     "static/css/main.588295d7.chunk.css",
-    "static/js/main.64b2560a.chunk.js"
+    "static/js/main.788530f4.chunk.js"
   ]
 }

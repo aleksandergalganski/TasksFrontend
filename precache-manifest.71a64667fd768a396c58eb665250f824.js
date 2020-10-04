@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4e94a45baf1981a59ab89a5c5f741938",
+    "revision": "18362f47a1c8da7705ec55ccf9de32be",
     "url": "https://aleksandergalganski.github.io/TasksFrontend/index.html"
   },
   {
-    "revision": "09ca93706668e5f296e0",
+    "revision": "17dc9ba59ea004e73166",
     "url": "https://aleksandergalganski.github.io/TasksFrontend/static/css/main.588295d7.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.ccad0d31.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "09ca93706668e5f296e0",
-    "url": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.64b2560a.chunk.js"
+    "revision": "17dc9ba59ea004e73166",
+    "url": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.788530f4.chunk.js"
   },
   {
     "revision": "10b1b862f12502cda838",
