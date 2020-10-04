@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "https://aleksandergalganski.github.io/TasksFrontend/static/css/main.588295d7.chunk.css",
-    "main.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.fb28313f.chunk.js",
-    "main.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.fb28313f.chunk.js.map",
+    "main.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.64b2560a.chunk.js",
+    "main.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/main.64b2560a.chunk.js.map",
     "runtime-main.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/runtime-main.c37f6642.js",
     "runtime-main.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/runtime-main.c37f6642.js.map",
-    "static/js/2.b1a493ba.chunk.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.b1a493ba.chunk.js",
-    "static/js/2.b1a493ba.chunk.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.b1a493ba.chunk.js.map",
+    "static/js/2.ccad0d31.chunk.js": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.ccad0d31.chunk.js",
+    "static/js/2.ccad0d31.chunk.js.map": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.ccad0d31.chunk.js.map",
     "index.html": "https://aleksandergalganski.github.io/TasksFrontend/index.html",
-    "precache-manifest.8b68093f1a227991e230965abc0b2187.js": "https://aleksandergalganski.github.io/TasksFrontend/precache-manifest.8b68093f1a227991e230965abc0b2187.js",
+    "precache-manifest.9704e1c865ccf56cef124b2ad1bb0118.js": "https://aleksandergalganski.github.io/TasksFrontend/precache-manifest.9704e1c865ccf56cef124b2ad1bb0118.js",
     "service-worker.js": "https://aleksandergalganski.github.io/TasksFrontend/service-worker.js",
     "static/css/main.588295d7.chunk.css.map": "https://aleksandergalganski.github.io/TasksFrontend/static/css/main.588295d7.chunk.css.map",
-    "static/js/2.b1a493ba.chunk.js.LICENSE.txt": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.b1a493ba.chunk.js.LICENSE.txt"
+    "static/js/2.ccad0d31.chunk.js.LICENSE.txt": "https://aleksandergalganski.github.io/TasksFrontend/static/js/2.ccad0d31.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c37f6642.js",
-    "static/js/2.b1a493ba.chunk.js",
+    "static/js/2.ccad0d31.chunk.js",
     "static/css/main.588295d7.chunk.css",
-    "static/js/main.fb28313f.chunk.js"
+    "static/js/main.64b2560a.chunk.js"
   ]
 }
