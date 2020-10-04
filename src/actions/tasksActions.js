@@ -19,7 +19,7 @@ export const getTasks = type => async (dispatch, state) => {
   try {
     dispatch({ type: SET_LOADING });
 
-    const res = await axios.get('http://localhost:5000/api/v1/tasks', {
+    const res = await axios.get(`${process.env.REACT_APP_API_URI}/api/v1/tasks`, {
       params: { type },
       headers: {
         'x-auth-token': state().auth.token
@@ -62,7 +62,7 @@ export const changeTaskType = (id, previousType) => async (dispatch, state) => {
     }
 
     const res = await axios.put(
-      `http://localhost:5000/api/v1/tasks/${id}`,
+      `${process.env.REACT_APP_API_URI}/api/v1/tasks/${id}`,
       {
         type: newType
       },
@@ -92,7 +92,7 @@ export const addTask = (type, name) => async (dispatch, state) => {
   try {
     dispatch({ type: SET_LOADING });
     const res = await axios.post(
-      'http://localhost:5000/api/v1/tasks',
+      `${process.env.REACT_APP_API_URI}/api/v1/tasks`,
       { type, name },
       {
         headers: {
@@ -121,7 +121,7 @@ export const deleteTask = (id, type) => async (dispatch, state) => {
   try {
     dispatch({ type: SET_LOADING });
 
-    await axios.delete(`http://localhost:5000/api/v1/tasks/${id}`, {
+    await axios.delete(`${process.env.REACT_APP_API_URI}/api/v1/tasks/${id}`, {
       headers: {
         'x-auth-token': state().auth.token
       }

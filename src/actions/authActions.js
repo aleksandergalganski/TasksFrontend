@@ -13,11 +13,15 @@ export const login = (email, password) => async dispatch => {
   try {
     dispatch({ type: SET_LOADING });
     const loginData = { email, password };
-    const res = await axios.post('http://localhost:5000/api/v1/auth/login', loginData, {
-      headers: {
-        'Content-Type': 'application/json'
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URI}/api/v1/auth/login`,
+      loginData,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    });
+    );
 
     dispatch({ type: LOGIN, payload: res.data.token });
   } catch (err) {
@@ -30,7 +34,7 @@ export const register = (email, password) => async dispatch => {
     dispatch({ type: SET_LOADING });
     const registerData = { email, password };
     const res = await axios.post(
-      'http://localhost:5000/api/v1/auth/register',
+      `${process.env.REACT_APP_API_URI}/api/v1/auth/register`,
       registerData,
       {
         headers: {
@@ -51,7 +55,7 @@ export const logout = () => dispatch => {
 
 export const getUser = () => async (dispatch, state) => {
   try {
-    const res = await axios.get('http://localhost:5000/api/v1/auth/whoami', {
+    const res = await axios.get(`${process.env.REACT_APP_API_URI}/api/v1/auth/whoami`, {
       headers: {
         'x-auth-token': state().auth.token
       }
