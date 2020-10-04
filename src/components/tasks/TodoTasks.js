@@ -55,7 +55,7 @@ const TodoTasks = ({ getTasks, addTask, tasks: { todoTasks } }) => {
                   <AddIcon />
                 </Fab>
               </ListItemIcon>
-              <ListItemText primary='Add Running Task' />
+              <ListItemText primary='Add ToDo Task' />
             </ListItem>
           </List>
         </CardContent>
